@@ -24,7 +24,7 @@ auto Sorting::create_dir() const -> void
 
 		fs::path path_str = output_dir_ / dir_entry.path().filename();
 		fs::create_directory(path_str);
-		for (short i = this->min_ref; i <= this->max_ref; i++)
+		for (int i = this->min_ref; i <= this->max_ref; i++)
 		{
 			fs::path ref_path = fs::path("REF" + std::to_string(i));
 			fs::create_directory(path_str / ref_path);
@@ -63,7 +63,7 @@ auto Sorting::copy_files() -> void
 	std::vector<fs::path> filenames = vector_pair.first;
 	std::vector<fs::path> paths = vector_pair.second;
 	unsigned short i = 0;
-	unsigned short str_length = 0;
+	size_t str_length = 0;
 	std::size_t pos = 0;
 	std::u8string temp;
 	std::u8string ref;

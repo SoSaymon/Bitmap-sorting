@@ -7,9 +7,9 @@
 class Read_setup
 {
 private:
-	std::string content_dir;
-	std::string bitmaps_dir;
-	std::string output_dir;
+	std::string_view content_dir;
+	std::string_view bitmaps_dir;
+	std::string_view output_dir;
 	int min_ref;
 	int max_ref;
 public:
@@ -18,9 +18,9 @@ public:
 	std::string& trim(std::string& str);
 	std::map<std::string, std::string> create_map();
 	void read_map(std::map<std::string, std::string>& setup);
-	std::string get_content_dir() { return this->content_dir; }
-	std::string get_bitmaps_dir() { return this->bitmaps_dir; }
-	std::string get_output_dir() { return this->output_dir; }
+	std::string_view get_content_dir() { return this->content_dir; }
+	std::string_view get_bitmaps_dir() { return this->bitmaps_dir; }
+	std::string_view get_output_dir() { return this->output_dir; }
 	int get_min_ref() { return this->min_ref; }
 	int get_max_ref() { return this->max_ref; }
 };
