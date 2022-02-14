@@ -1,10 +1,17 @@
 #include "sorting.h"
 #include <iostream>
 #include <vector>
-
+#include <string>
 namespace fs = std::filesystem;
 Sorting::Sorting()
-{}
+{
+	Read_setup r1;
+	/*this->content_dir_ = r1.get_content_dir();
+	this->bitmaps_dir_ = r1.get_bitmaps_dir();
+	this->output_dir_ = r1.get_output_dir();*/
+	this->min_ref = r1.get_min_ref();
+	this->max_ref = r1.get_max_ref();
+}
 
 Sorting::~Sorting()
 {}
@@ -17,7 +24,7 @@ auto Sorting::create_dir() const -> void
 
 		fs::path path_str = output_dir_ / dir_entry.path().filename();
 		fs::create_directory(path_str);
-		for (int i = 1; i <= 7; i++)
+		for (short i = this->min_ref; i <= this->max_ref; i++)
 		{
 			fs::path ref_path = fs::path("REF" + std::to_string(i));
 			fs::create_directory(path_str / ref_path);
@@ -55,9 +62,13 @@ auto Sorting::copy_files() -> void
 	std::pair<std::vector<fs::path>, std::vector<fs::path>> vector_pair = get_filename();
 	std::vector<fs::path> filenames = vector_pair.first;
 	std::vector<fs::path> paths = vector_pair.second;
-	unsigned short i = 0, str_length = 0;
+	unsigned short i = 0;
+	unsigned short str_length = 0;
 	std::size_t pos = 0;
-	std::u8string temp, ref, path_str, date;
+	std::u8string temp;
+	std::u8string ref;
+	std::u8string path_str;
+	std::u8string date;
 	fs::path path;
 
 	remove_DS_Store();

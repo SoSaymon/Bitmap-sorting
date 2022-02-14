@@ -144,10 +144,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bitmap-sorting.cpp" />
+    <ClCompile Include="Read_setup.cpp" />
     <ClCompile Include="sorting.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
+    <ClInclude Include="Read_setup.h" />
     <ClInclude Include="sorting.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

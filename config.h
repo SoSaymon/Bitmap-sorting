@@ -1,5 +1,5 @@
 // ReSharper disable once CppMissingIncludeGuard
-#include <string>
+
 #ifndef CONFIG_H
 #define CONFIG_H
 

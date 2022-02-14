@@ -21,12 +21,18 @@
     <ClCompile Include="sorting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Read_setup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sorting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Read_setup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
