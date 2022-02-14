@@ -1,78 +1,68 @@
 #include "Read_setup.h"
-std::map<std::string, std::string> Read_setup::create_map()
+std::map<std::string, std::string> create_map()
 {
-	std::string t;
-	try
-	{
-		std::fstream handler;
-		handler.open("setup.ini", std::ios::in | std::ios::binary);
-		if (handler.good())
-		{
-			std::size_t pos;
-			std::string buffer;
-			std::string key;
-			std::string value;
-			std::map <std::string, std::string> setup;
-			handler.seekg(0);
-			while (!(handler.eof()))
-			{
-				std::getline(handler, buffer);
-				if (buffer [0] == '#')
-					continue;
+    try
+    {
+        std::ifstream handler("setup.ini");
+        std::map<std::string, std::string> setup;
 
-				pos = buffer.find('=');
-				if (pos <= 99)
-				{
-					value = buffer.substr((pos + 1), (buffer.length() - (pos + 2)));
-					value = trim(value);
-					key = buffer.substr(0, pos);
-					key = trim(key);
-					setup.insert(std::pair<std::string, std::string>(key, value));
-				}
+        if (handler)
+        {
+            std::string line;
+            while (std::getline(handler, line))
+            {
+                if (line [0] == '#') continue;
 
-			}
-			handler.close();
-			return setup;
-		}
-		else
-		{
-			throw "ERROR! You can't open this file (setup.ini)";
-		}
-	}
-	catch (const std::string& e)
-	{
-		std::cerr << e << "\n";
-	}
+                const std::size_t sign_pos = line.find_first_of('=');
+                const std::string value = line.substr(0, sign_pos); // tu gdzies rtim
+                const std::string key = line.substr(sign_pos + 1, line.size() - sign_pos - 1); // tu gdzies trim
+
+                setup.emplace(value, key); // mozna tez setup.emplace(std::move(value), std::move(key)), wymaga #include <utility>
+            }
+
+            return setup;
+        }
+        else
+        {
+            throw std::runtime_error("ERROR! You can't open this file (setup.ini)");
+        }
+    }
+    catch (const std::runtime_error& e)
+    {
+        std::cerr << e.what() << "\n";
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << "\n";
+    }
 }
+
 void Read_setup::read_map(std::map<std::string, std::string>& setup)
 {
-	std::string key;
-	for(const auto& it : setup)
+	
+	for(const auto& [key, value] : setup)
 	{
-		key = it.first;
 		if (key == "content_dir")
 		{
-			this->content_dir = it.second;
+			this->content_dir = value;
 		}
 		else if (key == "bitmaps_dir")
 		{
-			this->bitmaps_dir = it.second;
+			this->bitmaps_dir = value;
 		}
 		else if (key == "output_dir")
 		{
-			this->output_dir = it.second;
+			this->output_dir = value;
 		}
 		else if (key == "min_ref")
 		{
-			this->min_ref = atoi(it.second.c_str());
+			this->min_ref = std::atoi(reinterpret_cast<const char*>(value.c_str()));
 		}
 		else if (key == "max_ref")
 		{
-			this->max_ref = atoi(it.second.c_str());
+			this->max_ref = std::atoi(reinterpret_cast<const char*>(value.c_str()));
 		}
 	}
-	std::cout << this->content_dir << "\n" << this->bitmaps_dir << "\n" << this->output_dir << "\n" << this->min_ref <<
-		"\n" << this->max_ref << "\n";
 }
 std::string& Read_setup::trim(std::string& str)
 {

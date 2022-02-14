@@ -6,9 +6,9 @@ namespace fs = std::filesystem;
 Sorting::Sorting()
 {
 	Read_setup r1;
-	/*this->content_dir_ = r1.get_content_dir();
+	this->content_dir_ = r1.get_content_dir();
 	this->bitmaps_dir_ = r1.get_bitmaps_dir();
-	this->output_dir_ = r1.get_output_dir();*/
+	this->output_dir_ = r1.get_output_dir();
 	this->min_ref = r1.get_min_ref();
 	this->max_ref = r1.get_max_ref();
 }
@@ -65,10 +65,10 @@ auto Sorting::copy_files() -> void
 	unsigned short i = 0;
 	size_t str_length = 0;
 	std::size_t pos = 0;
-	std::u8string temp;
-	std::u8string ref;
-	std::u8string path_str;
-	std::u8string date;
+	std::string temp;
+	std::string ref;
+	std::string path_str;
+	std::string date;
 	fs::path path;
 
 	remove_DS_Store();
@@ -76,20 +76,20 @@ auto Sorting::copy_files() -> void
 	std::cout << "Your sorted files are available under these paths:\n";
 	for(const auto& it : filenames)
 	{
-		temp = it.u8string();
+		temp = it.string();
 		str_length = temp.length();
-		pos = temp.find(u8".bmp");
+		pos = temp.find(".bmp");
 		if (pos < 60)
 		{
 			if (str_length == 48)
 			{
-				pos = temp.find(u8"2D");
+				pos = temp.find("2D");
 				if (pos < 16)
 				{
-					pos = temp.find(u8"REF");
+					pos = temp.find("REF");
 					ref = temp.substr(pos, 4);
 					date = temp.substr(16, 10);
-					path_str = output_dir_.u8string() + u8"\\" + date + u8"\\" + ref + u8"\\" + temp;
+					path_str = (output_dir_ / date /  ref / temp).string();
 					path = path_str;
 					fs::copy_file(paths.at(i), path, fs::copy_options::skip_existing);
 					std::cout << path << "\n";

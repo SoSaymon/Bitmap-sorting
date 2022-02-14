@@ -10,6 +10,7 @@ private:
 	std::string_view content_dir;
 	std::string_view bitmaps_dir;
 	std::string_view output_dir;
+	std::string_view output_dir_c;
 	int min_ref;
 	int max_ref;
 public:
