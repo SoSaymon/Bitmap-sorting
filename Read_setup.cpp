@@ -1,5 +1,5 @@
 #include "Read_setup.h"
-std::map<std::string, std::string> create_map()
+std::map<std::string, std::string> Read_setup::create_map()
 {
     try
     {
